@@ -1,0 +1,24 @@
+# - services : mongo et python:flask
+# - flask depend de mongo
+
+version: "3"
+services:
+  mongodb:
+    image: mongo
+    volumes: 
+      - mongoApp:/data/db
+    ports:
+      - "27017:27017"
+    restart: always
+
+  flask:
+    build: .
+    depends_on:
+      - mongodb
+    volumes:
+      - mongoApp:/app/data
+    ports:
+      - "9000:9000"
+
+volumes:
+  mongoApp:
